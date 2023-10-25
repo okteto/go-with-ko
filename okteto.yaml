@@ -14,7 +14,7 @@ deploy:
 dev:
   todo:
     # we use the default go dev env to iterate in the code
-    image: okteto/go:1
+    image: okteto/golang:1
     command: bash
     sync:
       - .:/app
