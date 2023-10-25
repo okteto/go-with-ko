@@ -107,7 +107,7 @@ func main() {
 	router.HandleFunc("/todo", getItems).Methods("GET")
 	router.HandleFunc("/todo", createItem).Methods("POST")
 	router.HandleFunc("/todo/{id}", deleteItem).Methods("DELETE")
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./kodata/")))
 
 	handler := cors.New(cors.Options{
 		AllowedMethods: []string{"GET", "POST", "DELETE", "PATCH", "OPTIONS"},

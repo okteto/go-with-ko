@@ -13,7 +13,7 @@ spec:
         app: todo
     spec:
       containers:
-        - image: ko://main.go
+        - image: ko://github.com/okteto/go-with-ko/cmd/app
           name: todo
           env:
             - name: POSTGRESQL_HOST
