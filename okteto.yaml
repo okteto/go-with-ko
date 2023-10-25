@@ -17,7 +17,8 @@ dev:
     image: okteto/golang:1
     command: bash
     sync:
-      - .:/app
+      - .:/usr/src/app
+    workdir: /usr/src/app
     volumes:
     - /go/pkg/
     - /root/.cache/go-build/
