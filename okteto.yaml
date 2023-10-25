@@ -4,13 +4,15 @@ deploy:
   - name: remove existing auth
     command: ./hacks/clean-auth.sh
 
-  - name: login to the registry
-    command: ko login ${OKTETO_REGISTRY_URL} -u ${OKTETO_USERNAME} -p ${OKTETO_TOKEN} --verbose
+  - name: login to the registry with ko
+    command: ko login ${OKTETO_REGISTRY_URL} -u ${OKTETO_USERNAME} -p ${OKTETO_TOKEN}
   
-  - name: set changes and deploy
-    command: KO_DOCKER_REPO=${OKTETO_REGISTRY_URL}/${OKTETO_NAMESPACE} ko apply -f manifests
+  - name: build image and deploy
+    command: |
+      export KO_DOCKER_REPO=${OKTETO_REGISTRY_URL}/${OKTETO_NAMESPACE} 
+      ko apply -f manifests
 dev:
-  todo-list:
+  todo:
     # we use the default go dev env to iterate in the code
     image: okteto/go:1
     command: bash
