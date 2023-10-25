@@ -1,0 +1,30 @@
+deploy:
+  image: ghcr.io/ko-build/ko:424456b264c83069e0bd8b6fffc3beb6c72d6a1d
+  commands:
+  - name: remove existing auth
+    command: ./hacks/clean-auth.sh
+
+  - name: login to the registry with ko
+    command: ko login ${OKTETO_REGISTRY_URL} -u ${OKTETO_USERNAME} -p ${OKTETO_TOKEN}
+  
+  - name: build image and deploy
+    command: |
+      export KO_DOCKER_REPO=${OKTETO_REGISTRY_URL}/${OKTETO_NAMESPACE} 
+      ko apply -f manifests
+dev:
+  todo:
+    # we use the default go dev env to iterate in the code
+    image: okteto/golang:1
+    command: bash
+    sync:
+      - .:/usr/src/app
+    workdir: /usr/src/app
+    volumes:
+    - /go/pkg/
+    - /root/.cache/go-build/
+    securityContext:
+      capabilities:
+        add:
+          - SYS_PTRACE
+    forward:
+    - 2345:2345
