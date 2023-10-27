@@ -3,15 +3,9 @@ deploy:
   commands:
   - name: build image and deploy with ko
     command: |
-      # Configure ko to use its own config store to avoid conflicts
-      export DOCKER_CONFIG=/tmp/ko/config.json
-
       # Configure ko to use the okteto repository to store the images it creates
       export KO_DOCKER_REPO=${OKTETO_REGISTRY_URL}/${OKTETO_NAMESPACE} 
-      
-      # Log in to the Okteto registry
-      ko login ${OKTETO_REGISTRY_URL} -u ${OKTETO_USERNAME} -p ${OKTETO_TOKEN}
-      
+
       # Build the image and deploy the application in your namespace
       ko apply -f manifests
 dev:
